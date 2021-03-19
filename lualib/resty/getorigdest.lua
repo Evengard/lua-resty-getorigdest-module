@@ -9,7 +9,7 @@ ffi.cdef [[
 	int ngx_stream_lua_resty_getorigdest_module_getorigdest(ngx_stream_lua_socket_tcp_upstream_t *u, char* buf, int buflen);
 ]]
 
-getorigdest = function(sock)
+local getorigdestfn = function(sock)
 	local u = sock[SOCKET_CTX_INDEX];
 	local buflen = 25;
 	local buf = ffi.new("char[?]", 25);
@@ -21,5 +21,5 @@ getorigdest = function(sock)
 end
 
 return {
-	getorigdest = getorigdest,
+	getorigdest = getorigdestfn,
 }
