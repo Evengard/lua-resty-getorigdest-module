@@ -94,8 +94,6 @@ int ngx_stream_lua_resty_getorigdest_module_getorigdest(ngx_stream_lua_socket_tc
 	memcpy(&pnl.daddr.v4, &local.sin_addr.s_addr, sizeof(pnl.daddr.v4));
 	pnl.sport = source.sin_port;
 	pnl.dport = local.sin_port;
-	//ngx_log_error(NGX_LOG_ERR, ngx_cycle->log, 0, "Source address: %s, Source port: %d", inet_ntoa(pnl.saddr.v4), ntohs(pnl.sport));
-	//ngx_log_error(NGX_LOG_ERR, ngx_cycle->log, 0, "Local address: %s, Local port: %d", inet_ntoa(pnl.daddr.v4), ntohs(pnl.dport));
 
 	if (ioctl(dev, DIOCNATLOOK, &pnl) == -1) {
 		ngx_log_error(NGX_LOG_ERR, ngx_cycle->log, 0, "ioctl DIOCNATLOOK failed: %s", strerror(errno));
@@ -108,7 +106,6 @@ int ngx_stream_lua_resty_getorigdest_module_getorigdest(ngx_stream_lua_socket_tc
 	destination.sin_family = AF_INET;
 	memcpy(&destination.sin_addr.s_addr, &pnl.rdaddr.v4, sizeof(destination.sin_addr.s_addr));
 	destination.sin_port = pnl.rdport;
-	//ngx_log_error(NGX_LOG_ERR, ngx_cycle->log, 0, "Destination address: %s, Destination port: %d", inet_ntoa(destination.sin_addr), ntohs(destination.sin_port));
 
 	orig.sin_addr = destination.sin_addr;
 	orig.sin_port = destination.sin_port;
